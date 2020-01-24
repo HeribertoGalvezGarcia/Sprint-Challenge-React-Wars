@@ -1,7 +1,19 @@
 .App {
   text-align: center;
 }
-.Header {
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+header button {
+  height: 25px;
+  border-radius: 5px;
+}
+
+header h1 {
   color: #443e3e;
   text-shadow: 1px 1px 5px #fff;
 }

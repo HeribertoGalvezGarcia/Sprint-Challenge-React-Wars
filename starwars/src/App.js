@@ -1,19 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import './App.css';
+import CharacterContainer from './components/CharacterContainer';
 
 const App = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
-  // the state properties here.
+  const [data, setData] = useState({});
+  const [url, setUrl] = useState('https://swapi.co/api/people/');
 
-  // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
-  // side effect in a component, you want to think about which state and/or props it should
-  // sync up with, if any.
+  useEffect(() => {
+    axios
+      .get(url)
+      .then(res => setData(res.data))
+      .catch(err => console.log(err));
+    }, [url]);
+
+  function next() {
+    if (data.next) setUrl(data.next);
+  }
+
+  function previous() {
+    if (data.previous) setUrl(data.previous);
+  }
 
   return (
     <div className="App">
-      <h1 className="Header">React Wars</h1>
+      <header>
+        <button onClick={previous}>Previous</button>
+        <h1>React Wars</h1>
+        <button onClick={next}>Next</button>
+      </header>
+      <CharacterContainer data={data}/>
     </div>
   );
-}
+};
 
 export default App;
